@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample-RequestResponse", "Sample-RequestResponse\Sample-RequestResponse.csproj", "{E9E2C393-A1CE-4CD0-A664-D106CE4763D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{A63C388E-364D-483C-9D79-E4DFAA4B73D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageContracts", "MessageContracts\MessageContracts.csproj", "{02B1B2F2-86F7-46FC-BFB0-C451FE54E737}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9E2C393-A1CE-4CD0-A664-D106CE4763D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9E2C393-A1CE-4CD0-A664-D106CE4763D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9E2C393-A1CE-4CD0-A664-D106CE4763D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9E2C393-A1CE-4CD0-A664-D106CE4763D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63C388E-364D-483C-9D79-E4DFAA4B73D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63C388E-364D-483C-9D79-E4DFAA4B73D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63C388E-364D-483C-9D79-E4DFAA4B73D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63C388E-364D-483C-9D79-E4DFAA4B73D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B1B2F2-86F7-46FC-BFB0-C451FE54E737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B1B2F2-86F7-46FC-BFB0-C451FE54E737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B1B2F2-86F7-46FC-BFB0-C451FE54E737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B1B2F2-86F7-46FC-BFB0-C451FE54E737}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
