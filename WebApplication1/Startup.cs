@@ -3,7 +3,6 @@ using MassTransit;
 using MessageContracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApplication1
@@ -18,10 +17,7 @@ namespace WebApplication1
 
             var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                var host = cfg.Host(new Uri("rabbitmq://localhost:5672/"), h => {
-                  h.Username("rabbitmq");
-                  h.Password("rabbitmq");
-                });
+                var host = cfg.Host(new Uri("rabbitmq://localhost/"), h => { });
             });
 
             services.AddSingleton<IPublishEndpoint>(bus);
@@ -29,7 +25,7 @@ namespace WebApplication1
             services.AddSingleton<IBus>(bus);
 
             var timeout = TimeSpan.FromSeconds(10);
-            var serviceAddress = new Uri("rabbitmq://localhost:5672/order-service");
+            var serviceAddress = new Uri("rabbitmq://localhost/order-service");
 
             services.AddScoped<IRequestClient<SubmitOrder, OrderAccepted>>(x =>
                 new MessageRequestClient<SubmitOrder, OrderAccepted>(x.GetRequiredService<IBus>(), serviceAddress, timeout, timeout));

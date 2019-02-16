@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GreenPipes;
 using MassTransit;
 using MessageContracts;
 using Microsoft.Extensions.Hosting;
@@ -15,10 +16,7 @@ namespace Sample_RequestResponse
     {
       _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
         {
-          var host = cfg.Host(new Uri("rabbitmq://localhost:5672/"), h => {
-            h.Username("rabbitmq");
-            h.Password("rabbitmq");
-          });
+          var host = cfg.Host(new Uri("rabbitmq://localhost/"), h => { });
 
           cfg.ReceiveEndpoint(host, "order-service", e =>
           {
