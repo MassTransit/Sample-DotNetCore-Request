@@ -1,42 +1,21 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
-using MassTransit;
-using MessageContracts;
 
 namespace Sample_RequestResponse
 {
-    class Program
+  class Program
+  {
+    static async Task Main(string[] args)
     {
-        static async Task Main(string[] args)
+      var builder = new HostBuilder()
+        .ConfigureServices((hostContext, services) =>
         {
-            var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
-            {
-                var host = cfg.Host(new Uri("rabbitmq://localhost/"), h => { });
+          services.AddHostedService<MessageQueueService>();
+        });
 
-                cfg.ReceiveEndpoint(host, "order-service", e =>
-                {
-                    e.Handler<SubmitOrder>(context => context.RespondAsync<OrderAccepted>(new
-                    {
-                        context.Message.OrderId
-                    }));
-                });
-            });
-
-            await bus.StartAsync();
-            try
-            {
-                Console.WriteLine("Working....");
-
-                Console.ReadLine();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            finally
-            {
-                await bus.StopAsync();
-            }
-        }
+      await builder
+        .RunConsoleAsync();
     }
+  }
 }
