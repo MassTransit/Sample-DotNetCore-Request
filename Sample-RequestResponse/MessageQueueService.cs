@@ -1,41 +1,45 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using GreenPipes;
 using MassTransit;
 using MessageContracts;
 using Microsoft.Extensions.Hosting;
 
 namespace Sample_RequestResponse
 {
-  public class MessageQueueService : BackgroundService
-  {
-    private readonly IBusControl _bus;
-
-    public MessageQueueService()
+    public class MessageQueueService : BackgroundService
     {
-      _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
+        readonly IBusControl _bus;
+
+        public MessageQueueService()
         {
-          var host = cfg.Host(new Uri("rabbitmq://localhost/"), h => { });
-
-          cfg.ReceiveEndpoint(host, "order-service", e =>
-          {
-            e.Handler<SubmitOrder>(context => context.RespondAsync<OrderAccepted>(new
+            _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-              context.Message.OrderId
-            }));
-          });
-        });
-    }
+                cfg.Host(new Uri("rabbitmq://localhost/"), h => { });
 
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-      return _bus.StartAsync();
-    }
+                cfg.ReceiveEndpoint("order-service", e =>
+                {
+                    e.Handler<SubmitOrder>(context =>
+                    {
+                        Console.WriteLine("Order: {0}", context.Message.OrderId);
 
-    public override Task StopAsync(CancellationToken cancellationToken)
-    {
-      return Task.WhenAll(base.StopAsync(cancellationToken), _bus.StopAsync());
+                        return context.RespondAsync<OrderAccepted>(new
+                        {
+                            context.Message.OrderId
+                        });
+                    });
+                });
+            });
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            return _bus.StartAsync(stoppingToken);
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.WhenAll(base.StopAsync(cancellationToken), _bus.StopAsync(cancellationToken));
+        }
     }
-  }
 }
